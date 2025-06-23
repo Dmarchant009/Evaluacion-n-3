@@ -29,3 +29,9 @@ Dos turnos con el mismo número.
 Pérdida del orden en la cola de espera.
 
 Historiales divididos entre instancias.
+
+### ¿Como se uso?
+Constructor privado evita que otros puedan crear instancias desde fuera
+getInstancia() asegura que solo se crea una instancia, la primera vez que se llama
+A partir de ahí, siempre se reutiliza la misma instancia
+![Image](https://github.com/user-attachments/assets/cfdda639-bd3b-4e8e-8ff2-9102cb1c9a59)
