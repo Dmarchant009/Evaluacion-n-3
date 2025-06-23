@@ -11,6 +11,8 @@ El sistema integra patrones de diseño como Prototype, Singleton, Adapter e Iter
 ## Clase Turno patron aplicado Prototype (creacional)
 
 ### ¿por que se uso?
-
-
-
+todos los turnos tienen una estructura base común: número, nombre del cliente y hora. En lugar de crear manualmente un nuevo objeto desde cero cada vez, se clona una plantilla de turno, y luego se personaliza con los datos del cliente.
+### ¿Como se uso en el sistema?
+La clase Turno implementa Cloneable y sobrescribe el método clone()
+Dentro de GestorTurnos, se crea una plantilla con new Turno("", 0, "")
+Luego se clona con Turno nuevo = plantilla.clone(); y se personaliza.
