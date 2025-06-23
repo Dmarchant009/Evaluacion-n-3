@@ -8,5 +8,9 @@ El sistema integra patrones de diseño como Prototype, Singleton, Adapter e Iter
 
 # Patrones de diseño aplicados al sistema.
 
+## Clase Turno patron aplicado Prototype (creacional)
+
+### ¿por que se uso?
+
 
 
