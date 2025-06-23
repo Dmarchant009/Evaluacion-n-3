@@ -17,3 +17,15 @@ La clase Turno implementa Cloneable y sobrescribe el método clone()
 Dentro de GestorTurnos, se crea una plantilla con new Turno("", 0, "")
 Luego se clona con Turno nuevo = plantilla.clone(); y se personaliza.
 ![Image](https://github.com/user-attachments/assets/0c0e4e8f-c6bc-4df6-ba1b-767733c69cbc)
+
+## Clase GestorTurnos 
+### ¿Por que se uso?
+En este sistema de turnos, solo debe haber un único gestor que administre todos los turnos pendientes e históricos.
+
+Si existieran múltiples instancias de GestorTurnos, se podrían generar inconsistencias.
+como por ejemplo.
+Dos turnos con el mismo número.
+
+Pérdida del orden en la cola de espera.
+
+Historiales divididos entre instancias.
