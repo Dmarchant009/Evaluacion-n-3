@@ -16,6 +16,7 @@ todos los turnos tienen una estructura base común: número, nombre del cliente 
 La clase Turno implementa Cloneable y sobrescribe el método clone()
 Dentro de GestorTurnos, se crea una plantilla con new Turno("", 0, "")
 Luego se clona con Turno nuevo = plantilla.clone(); y se personaliza.
+
 ![Image](https://github.com/user-attachments/assets/0c0e4e8f-c6bc-4df6-ba1b-767733c69cbc)
 
 ## Clase GestorTurnos (creacional)
@@ -34,7 +35,9 @@ Historiales divididos entre instancias.
 Constructor privado evita que otros puedan crear instancias desde fuera
 getInstancia() asegura que solo se crea una instancia, la primera vez que se llama
 A partir de ahí, siempre se reutiliza la misma instancia
+
 ![Image](https://github.com/user-attachments/assets/cfdda639-bd3b-4e8e-8ff2-9102cb1c9a59)
+
 ### ¿Donde se usa?
 se accede desde cualquier parte desde, GestorTurnos gestor = GestorTurnos.getInstancia();
 
@@ -45,10 +48,12 @@ El sistema maneja una cola de turnos pendientes, y es necesario recorrerla para 
 
 ### ¿Como se uso?
 Se creó la clase TurnoIterator que implementa  Iterator<Turno>
+
 ![Image](https://github.com/user-attachments/assets/73c8a3fe-a5f6-4133-a790-bebd840b0445)
 
 ### ¿Donde se uso?
 se uso en metodo mostrarPendientes, permite mostrar todos los turnos en espera uno por uno , sin saber cómo están almacenados internamente.
+
 ![Image](https://github.com/user-attachments/assets/27860af7-f1ca-4452-9df4-413af6543ae1)
 
 
