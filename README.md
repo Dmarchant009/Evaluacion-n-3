@@ -16,3 +16,4 @@ todos los turnos tienen una estructura base común: número, nombre del cliente 
 La clase Turno implementa Cloneable y sobrescribe el método clone()
 Dentro de GestorTurnos, se crea una plantilla con new Turno("", 0, "")
 Luego se clona con Turno nuevo = plantilla.clone(); y se personaliza.
+![Image](https://github.com/user-attachments/assets/0c0e4e8f-c6bc-4df6-ba1b-767733c69cbc)
