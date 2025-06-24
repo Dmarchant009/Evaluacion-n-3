@@ -56,7 +56,31 @@ se uso en metodo mostrarPendientes, permite mostrar todos los turnos en espera u
 
 ![Image](https://github.com/user-attachments/assets/27860af7-f1ca-4452-9df4-413af6543ae1)
 
+## Clase AdaptadorConsola se uso el patron Adapter (estructural )
 
+### ¿Por que se uso?
+En el sistema se necesita una forma de interactuar con el usuario en este caso a traves de la consola, pero la logica de turnos está separada y no conoce los detalles de entrada y salida.
+para resolverlo se usa el adapter.
+Se define una interfaz común (CanalDeInterfaz) para todas las formas de interacción posibles (por ejemplo, consola, web, app móvil, etc.)
+Se crea un adaptador concreto (AdaptadorConsola) que implementa esa interfaz y traduce las acciones del usuario en llamadas a GestorTurnos.
+
+## ¿Como se uso?
+Interfaz CanalDeInterfaz define lo que un canal debe dar
+
+![Image](https://github.com/user-attachments/assets/4ec5faa6-5a83-438a-9441-783692470f7b)
+
+AdaptadorConsola implementa el CanalDeInterfaz
+
+![Image](https://github.com/user-attachments/assets/8dee0364-4d32-4f0b-8e3f-2d3faca071c7)
+
+## ¿Donde se usa?
+
+se declara CanalDeInterfaz sistema = new AdaptadorConsola();
+
+y luego sistema.solicitarTurno();
+sistema.mostrarPendientes();
+lo que significa que podriamos cambiar a otro canal como por ejemplo adaptador web 
+CanalDeInterfaz sistema = new AdaptadorWeb();
 
 
 
