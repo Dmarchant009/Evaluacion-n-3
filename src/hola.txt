@@ -1,0 +1,206 @@
+import java.util.Iterator;
+import java.util.Queue;
+import java.util.*;
+
+class Turno implements Cloneable {
+    private String cliente;
+    private int numero;
+    private String hora;
+
+    public Turno(String cliente, int numero, String hora) {
+        this.cliente = cliente;
+        this.numero = numero;
+        this.hora = hora;
+    }
+    @Override
+    public Turno clone() {
+        try {
+            return (Turno) super.clone();
+        } catch (CloneNotSupportedException e) {
+            throw new AssertionError("No se pudo clonar el turno.");
+        }
+    }
+
+    public String toString() {
+        return "Turno #" + numero + " - Cliente: " + cliente + " - Hora: " + hora;
+    }
+
+    public void setCliente(String cliente) { 
+        this.cliente = cliente; 
+    }
+    public void setNumero(int numero) { 
+        this.numero = numero; 
+    }
+    public void setHora(String hora) { 
+        this.hora = hora; 
+    }
+    public int getNumero() { 
+        return numero; 
+    }
+}
+
+class GestorTurnos {
+    private static GestorTurnos instancia;
+    private Queue<Turno> turnosPendientes = new LinkedList<>();
+    private List<Turno> historial = new ArrayList<>();
+    private int contador = 1;
+
+    private GestorTurnos() {}
+
+    public static GestorTurnos getInstancia() {
+        if (instancia == null) {
+            instancia = new GestorTurnos();
+        }
+        return instancia;
+    }
+
+    public Turno generarTurno(String cliente) {
+        Turno plantilla = new Turno("", 0, "");
+        Turno nuevo = plantilla.clone();
+        nuevo.setCliente(cliente);
+        nuevo.setNumero(contador++);
+        nuevo.setHora(new Date().toString());
+        turnosPendientes.add(nuevo);
+        historial.add(nuevo);
+        return nuevo;
+    }
+
+    public Turno atenderSiguiente() {
+        return turnosPendientes.poll();
+    }
+
+    public List<Turno> getHistorial() {
+        return historial;
+    }
+
+    public Queue<Turno> getPendientes() {
+        return turnosPendientes;
+    }
+
+    public Turno reimprimir(int numeroBuscado) {
+        for (Turno t : historial) {
+            if (t.getNumero() == numeroBuscado) return t;
+        }
+        return null;
+    }
+}
+
+class TurnoIterator implements Iterator<Turno> {
+    private Iterator<Turno> iterator;
+
+    public TurnoIterator(Queue<Turno> turnos) {
+        this.iterator = turnos.iterator();
+    }
+
+    @Override
+    public boolean hasNext() {
+        return iterator.hasNext();
+    }
+
+    @Override
+    public Turno next() {
+        return iterator.next();
+    }
+}
+
+// Adapter pattern
+interface CanalDeInterfaz {
+    void solicitarTurno();
+    void mostrarPendientes();
+    void atenderSiguiente();
+    void reimprimirTurno();
+    void mostrarHistorial();
+}
+
+class AdaptadorConsola implements CanalDeInterfaz {
+    private Scanner scanner = new Scanner(System.in);
+    private GestorTurnos gestor = GestorTurnos.getInstancia();
+    public void solicitarTurno() {
+        System.out.print("Ingrese nombre del cliente: ");
+        String nombre = scanner.nextLine();
+        Turno turno = gestor.generarTurno(nombre);
+        System.out.println("\nTurno generado: " + turno);
+    }
+
+    public void mostrarPendientes() {
+        System.out.println("\n Turnos pendientes:");
+        TurnoIterator it = new TurnoIterator(gestor.getPendientes());
+        while (it.hasNext()) {
+            System.out.println(it.next());
+        }
+    }
+    public void atenderSiguiente() {
+        Turno siguiente = gestor.atenderSiguiente();
+        if (siguiente != null) {
+            System.out.println("\n Atendiendo a: " + siguiente);
+        } else {
+            System.out.println("\n No hay turnos pendientes");
+        }
+    }
+
+    public void reimprimirTurno() {
+        System.out.print("Ingrese número de turno a reimprimir: ");
+        int numero = Integer.parseInt(scanner.nextLine());
+        Turno turno = gestor.reimprimir(numero);
+        if (turno != null) {
+            System.out.println("\n Reimpresión: " + turno);
+        } else {
+            System.out.println("\n Turno no encontrado.");
+        }
+    }
+
+    public void mostrarHistorial() {
+        System.out.println("\n Historial de turnos:");
+        for (Turno t : gestor.getHistorial()) {
+            System.out.println(t);
+        }
+    }
+}
+
+public class cuatro {
+    public static void main(String[] args) {
+        CanalDeInterfaz sistema = new AdaptadorConsola();
+        Scanner scanner = new Scanner(System.in);
+        int opcion;
+
+        do {
+            System.out.println("\n--- MENÚ PRINCIPAL ---");
+            System.out.println("1. Solicitar turno");
+            System.out.println("2. Ver turnos pendientes");
+            System.out.println("3. Atender siguiente turno");
+            System.out.println("4. Reimprimir turno");
+            System.out.println("5. Ver historial de turnos");
+            System.out.println("6. Salir");
+            System.out.print("Seleccione una opción: ");
+
+            opcion = Integer.parseInt(scanner.nextLine());
+
+            switch (opcion) {
+                case 1:
+                    sistema.solicitarTurno();
+                    break;
+                case 2:
+                    sistema.mostrarPendientes();
+                    break;
+                case 3:
+                    sistema.atenderSiguiente();
+                    break;
+                case 4:
+                    sistema.reimprimirTurno();
+                    break;
+                case 5:
+                    sistema.mostrarHistorial();
+                    break;
+                case 6:
+                    System.out.println(" Saliendo del sistema...");
+                    break;
+                default:
+                    System.out.println(" Opción inválida.");
+                    break;
+            }
+
+        } while (opcion != 6);
+
+        scanner.close();
+    }
+}
